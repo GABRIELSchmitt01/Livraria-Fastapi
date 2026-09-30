@@ -1,0 +1,9 @@
+services:
+  fastapi:
+    build: .
+    container_name: fastapi_aula
+    ports:
+      - "8030:8030"
+    volumes:
+      - .:/app
+    restart: always
