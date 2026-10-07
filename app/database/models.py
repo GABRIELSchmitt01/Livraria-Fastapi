@@ -6,7 +6,7 @@ Base = declarative_base()
 class LivroModel(Base):
     __tablename__ = "livros"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     titulo = Column(String(100))
     autor = Column(String(100))
     ano_publicacao = Column(Integer)
