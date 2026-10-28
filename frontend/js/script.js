@@ -59,6 +59,37 @@ const listarLivro = document.getElementById("livrosList");
 
 const formLivro = document.getAnimationsById("formLivro");
 
+//Carregar Livros
+async function carregarLivros() {
+    const response = await fetch(API_URL);
+    const livros = await response.json();
+    listaLivros.innerHTML = "";
+    
+    livros.forEach((livro) => {
+        listaLivros.innerHTML += `
+            <div class="livro">
+                <div>
+                    <strong>Título:</strong> ${livro.titulo}<br>
+                    <strong>Autor:</strong> ${livro.autor}<br>
+                    <strong>Ano de Publicação:</strong> ${livro.ano_publicacao}
+                </div>
+                <div class="acoes">
+                    <button onclick="removerLivro(${livro.id})">Remover</button>
+                </div>
+            </div>
+        
+        `;    
+    });
+}
+//Remover Livro
+async function removerLivro(id) {
+    await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+    });
+    carregarLivros();
+}
+
+
 //Adicionar Livros
 formLivro.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -77,5 +108,11 @@ formLivro.addEventListener("submit", async (event) => {
             autor: autor,
             ano_publicacao: ano_publicacao
         })
-    })
-})
+    });
+    formLivro.reset();
+
+    carregarLivros();
+}
+);
+
+carregarLivros();
